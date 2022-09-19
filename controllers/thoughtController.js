@@ -58,7 +58,19 @@ module.exports = {
         res.status(500).json(err);
       });
   },
-
+  updateThought(req, res) {
+    Thought.findOneAndUpdate(
+      { _id: req.params.thoughtId },
+      { $set: req.body },
+      { runValidators: true, new: true }
+    )
+      .then((thought) =>
+        !thought
+          ? res.status(404).json({ message: 'No thought with this id!' })
+          : res.json(thought)
+      )
+      .catch((err) => res.status(500).json(err));
+  },
   // Add an assignment to a student
   addReaction(req, res) {
     console.log('You are adding a reaction');
