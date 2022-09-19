@@ -78,7 +78,7 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
   // Remove reaction from a student
-  removeAssignment(req, res) {
+  removeReaction(req, res) {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
       { $pull: { reactions: { reactionId: req.params.reactionId } } },
