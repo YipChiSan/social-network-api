@@ -1,4 +1,4 @@
-const { Thought: User, User } = require('../models');
+const { Thought, User } = require('../models');
 
 module.exports = {
   // Get all users
@@ -9,7 +9,7 @@ module.exports = {
   },
   // Get a user
   getSingleUser(req, res) {
-    Course.findOne({ _id: req.params.userId })
+    User.findOne({ _id: req.params.userId })
       .select('-__v')
       .then((user) =>
         !user
@@ -29,7 +29,7 @@ module.exports = {
   },
   // Delete a user
   deleteUser(req, res) {
-    Course.findOneAndDelete({ _id: req.params.userId })
+    User.findOneAndDelete({ _id: req.params.userId })
       .then((user) =>
         !user
           ? res.status(404).json({ message: 'No user with that ID' })
@@ -72,8 +72,8 @@ module.exports = {
   // Remove reaction from a student
   removeFriend(req, res) {
     User.findOneAndUpdate(
-      { _id: req.params.thoughtId },
-      { $pull: { friends: { userId: req.params.friendId } } },
+      { _id: req.params.userId },
+      { $pull: { friends:  req.params.friendId  } },
       { runValidators: true, new: true }
     )
       .then((user) =>
